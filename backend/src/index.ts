@@ -31,6 +31,7 @@ import * as fs from 'fs';
 import ContactRouter from './routes/contact.route';
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: Env.FRONTEND_ORIGIN,
