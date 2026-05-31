@@ -34,7 +34,7 @@ const baseQueryWithResult:typeof baseQuery = async(args,api,extraOptions) => {
         console.log("Access token expired, attempting silent token refresh...");
 
         // Fire a background GET request directly to your /auth/refresh endpoint
-        const refreshResult = await baseQuery({ url: 'auth/refresh', method: 'GET' }, api, extraOptions);
+        const refreshResult = await baseQuery({ url: 'auth/refresh', method: 'GET',credentials:"include" }, api, extraOptions);
         
         if (refreshResult.data) {
             console.log("Token refresh successful! Syncing new credentials.");
