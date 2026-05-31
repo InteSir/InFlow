@@ -2,7 +2,6 @@ import { Laptop, LucideIcon, Smartphone } from "lucide-react";
 import {UAParser} from "ua-parser-js";
 import {isPast,formatDistanceToNowStrict,format} from "date-fns";
 
-type Device = "desktop" | "mobile";
 
 interface AgentType {
     deviceType:string;

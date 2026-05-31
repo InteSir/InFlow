@@ -1,10 +1,8 @@
 import { FC } from "react";
 import CountUp from "react-countup";
 import { TrendingDownIcon, TrendingUpIcon, LucideIcon } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCurrency, FormatCurrencyOptions } from "@/lib/format-currency";
+import {  FormatCurrencyOptions } from "@/lib/format-currency";
 import { formatPercentage } from "@/lib/format-percentage";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DateRangeEnum, DateRangeType } from "@/components/date-range-select";
 
@@ -182,7 +180,7 @@ const SummaryCard: FC<SummaryCardProps> = ({
     if (isPercentageValue) return formatPercentage(val, { decimalPlaces: 1 });
     return fmt(val, {
       type: cardType === "expenses" ? "EXPENSE" : "INCOME",
-      compact:"true",
+      compact:true,
       
     });
   };

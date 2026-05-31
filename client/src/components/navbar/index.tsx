@@ -117,8 +117,6 @@ const Navbar = () => {
               <UserNav
                 userName={user?.name || ""}
                 profilePicture={user?.profilePicture || ""}
-                userPlan = {user?.subscriptionPlan}
-                userPlanEnds = {user?.subscriptionPlan === "free" ? user?.trialEndsAt : user?.currentPeriodEnd}
                 onLogout={() => setIsLogoutDialogOpen(true)}
               />
             </div>

@@ -16,25 +16,14 @@ import {
   } from "../ui/dropdown-menu"
   
 
-function DaysLeft(trialEndsAt?:string | null):number{
-  if (trialEndsAt){
-    return Math.ceil(
-        (new Date(trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-      );
-  }
-  return 3
-}
+
 export function UserNav({
   userName,
   profilePicture,
   onLogout,
-  userPlan,
-  userPlanEnds,
 }: {
   userName: string;
   profilePicture: string;
-  userPlan?:string,
-  userPlanEnds?:string | null,
   onLogout: () => void;
 }) {
    

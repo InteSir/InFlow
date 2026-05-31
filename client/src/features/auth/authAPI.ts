@@ -1,5 +1,4 @@
 import { apiClient } from "@/app/api-client";
-import { string } from "better-auth";
 
 export const authApi = apiClient.injectEndpoints({
   endpoints: (builder) => ({

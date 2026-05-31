@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import { Label, Pie, PieChart, Cell } from "recharts";
 
 import {
@@ -23,10 +23,7 @@ import { EmptyState } from "@/components/empty-state";
 import { useExpensePieChartBreakdownQuery } from "@/features/analytics/analyticsAPI";
 import useCurrency from "@/hooks/use-currency";
 
-interface Category {
-  name: string;
-  amount: number;
-}
+
 
 const COLORS = [
   "var(--color-chart-1)",

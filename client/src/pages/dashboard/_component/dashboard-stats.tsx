@@ -5,7 +5,7 @@ import useCurrency from "@/hooks/use-currency";
 
 const DashboardStats = ({ dateRange }: { dateRange?: DateRangeType }) => {
 
-  const { data, isFetching } = useSummaryAnalyticsQuery(
+  const { data} = useSummaryAnalyticsQuery(
     { preset: dateRange?.value },
     { skip: !dateRange }
   );

@@ -1,9 +1,13 @@
-import { DataTable } from '@/components/data-table'
-import { reportColumns } from './column'
+
 import { useState } from 'react'
 import { useGetAllReportsQuery } from '@/features/report/reportAPI'
 import { Clock, Loader } from 'lucide-react'
 
+export type ReportStatus =
+  | "SENT"
+  | "FAILED"
+  | "PENDING"
+  | "NO_ACTIVITY";
 
 const STATUS_STYLES: Record<ReportStatus, string> = {
   SENT:        "bg-green-100  text-green-800 dark:bg-green-200 dark:text-black",
@@ -12,7 +16,7 @@ const STATUS_STYLES: Record<ReportStatus, string> = {
   NO_ACTIVITY: "bg-gray-100   text-gray-600",
 };
  
-const StatusBadge = ({ status }: { status: string }) => (
+const StatusBadge = ({ status }: { status: string}) => (
   <span
     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
       ${STATUS_STYLES[status as ReportStatus] ?? "bg-gray-100 text-gray-600"}`}
@@ -21,7 +25,7 @@ const StatusBadge = ({ status }: { status: string }) => (
   </span>
 );
 const ReportTable = () => {
-  const [filter, setFilter] = useState({
+  const [filter] = useState({
     pageNumber: 1,
     pageSize: 10,
   })
@@ -29,29 +33,12 @@ const ReportTable = () => {
   const { data, isFetching } = useGetAllReportsQuery(filter);
 
   const reports = data?.reports ?? [];
-  console.log(reports);
-
-  const pagination = {
-    totalItems: data?.pagination?.totalCount || 0,
-    totalPages: data?.pagination?.totalPages || 0,
-    pageNumber: filter.pageNumber,
-    pageSize: filter.pageSize,
-  }
-
-
-  const handlePageChange = (pageNumber: number) => {
-    setFilter((prev) => ({ ...prev, pageNumber }))
-  }
-
-  const handlePageSizeChange = (pageSize: number) => {
-    setFilter((prev) => ({ ...prev, pageSize }))
-  }
-
+  
 
   return (
-    <div className='space-y-4'>
-      <div className='w-full'>
-        <table className='w-full text-sm text-left border-collapse'>
+    <div className='w-full space-y-4'>
+      <div className='w-full overflow-x-auto'>
+        <table className='w-full text-sm text-left border-collapse '>
           <thead className='bg-gray-50 dark:bg-[#C6FF34]/90 sticky top-0 z-10 '>
             <tr>
               {["Report Period", "Frequency", "Sent Date", "Status"].map((h) => (

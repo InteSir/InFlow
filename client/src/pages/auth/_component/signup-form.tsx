@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { AUTH_ROUTES } from "@/routes/common/routePath";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,9 +21,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const [registerUser,{isLoading}] = useRegisterMutation();
   
-  // const form = useForm<FormValues>({
-  //   resolver: zodResolver(schema),
-  // });
+
 
   const {register,handleSubmit,reset,formState:{errors}} = useForm<FormValues>({
     resolver:zodResolver(schema),

@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { AUTH_ROUTES, PROTECTED_ROUTES } from "@/routes/common/routePath";
 import { z } from "zod";

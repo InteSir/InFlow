@@ -171,7 +171,7 @@ const RecurrentTransactions = () => {
                                                     ? "text-green-600"
                                                     : "text-red-500"
                                                 } dark:text-[#C6FF34]/90 `}>
-                                                  {fmt(transaction.amount,{type:transaction.type,compact:"true"})}
+                                                  {fmt(transaction.amount,{type:transaction.type,compact:true})}
 
                                             </p>
                                             <p className="text-xs text-gray-400 capitalize">

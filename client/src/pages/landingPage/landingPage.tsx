@@ -1,8 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState, useEffect} from "react";
+import { NavLink } from "react-router-dom";
 import DashImg from "../../assets/images/proj2.jpg";
 // ── Icons (inline SVG helpers) ─────────────────────────────────────────────
-const Icon = ({ d, size = 20, stroke = "currentColor", fill = "none", strokeWidth = 1.5 }) => (
+type IconProps = {
+  d: string | string[];
+  size?: number;
+  stroke?: string;
+  fill?: string;
+  strokeWidth?: number;
+};
+
+const Icon = ({ d, size = 20, stroke = "currentColor", fill = "none", strokeWidth = 1.5 }:IconProps) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
     {Array.isArray(d) ? d.map((p, i) => <path key={i} d={p} />) : <path d={d} />}
   </svg>
@@ -10,49 +18,14 @@ const Icon = ({ d, size = 20, stroke = "currentColor", fill = "none", strokeWidt
 
 const MenuIcon = () => <Icon d="M3 12h18M3 6h18M3 18h18" />;
 const XIcon = () => <Icon d="M18 6L6 18M6 6l12 12" />;
-const ShieldIcon = () => <Icon d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />;
-
-const ZapIcon = () => <Icon d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />;
-const HeadphonesIcon = () => <Icon d="M3 18v-6a9 9 0 0118 0v6M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z" />;
-const InfinityIcon = () => <Icon d="M12 12c-2-2.5-4-4-6-4a4 4 0 000 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 000-8c-2 0-4 1.5-6 4z" />;
 const CheckIcon = () => <Icon d="M20 6L9 17l-5-5" strokeWidth={2} />;
 const ArrowRightIcon = () => <Icon d="M5 12h14M12 5l7 7-7 7" />;
 const StarIcon = () => <Icon d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" stroke="none" />;
 const TrendUpIcon = () => <Icon d={["M22 7l-8.5 8.5-5-5L2 17", "M16 7h6v6"]} />;
-const PieIcon = () => <Icon d={["M21.21 15.89A10 10 0 118 2.83", "M22 12A10 10 0 0012 2v10z"]} />;
 const SendIcon = () => <Icon d={["M22 2L11 13", "M22 2L15 22 11 13 2 9l20-7z"]} />;
-const GitBranchIcon = () => <Icon d={["M6 3v12", "M18 9a3 3 0 100-6 3 3 0 000 6z", "M6 21a3 3 0 100-6 3 3 0 000 6z", "M18 9a9 9 0 01-9 9"]} />;
 
-// ── Animated counter ────────────────────────────────────────────────────────
-function useCountUp(end, duration = 2000, start = false) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!start) return;
-    let startTime = null;
-    const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * end));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [end, duration, start]);
-  return count;
-}
 
-// ── Intersection Observer Hook ──────────────────────────────────────────────
-function useInView(threshold = 0.1) {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setInView(true);
-    }, { threshold });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return [ref, inView];
-}
+
 
 
 // ── Feature Card ────────────────────────────────────────────────────────────
@@ -62,8 +35,6 @@ import {
   Bot as BotIcon,
   BarChart3 as BarChartIcon,
   Repeat as RepeatIcon,
-  Mail as MailIcon,
-  Filter as FilterIcon,
   CreditCard as CreditCardIcon,
   Zap,
   Shield,
@@ -265,7 +236,13 @@ function FeaturesBentoGrid() {
 }
 
 // ── Pricing Card ────────────────────────────────────────────────────────────
-function PricingCard({ plan, price, period, features, cta, highlighted, badge }) {
+function PricingCard({ plan, price, period, features, cta, highlighted, badge }:{ plan: string;
+  price: string;
+  period?: string;
+  features: string[];
+  cta: string;
+  highlighted: boolean;
+  badge?: string;}) {
   return (
     <div style={{
       background: highlighted ? "#0057FF" : "#fff",
@@ -294,7 +271,7 @@ function PricingCard({ plan, price, period, features, cta, highlighted, badge })
       </div>
       <div style={{ height: "1px", background: highlighted ? "rgba(255,255,255,0.15)" : "#E8E8E8", margin: "20px 0" }} />
       <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "28px" }}>
-        {features.map(f => (
+        {features.map((f:string) => (
           <div key={f} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{ color: highlighted ? "#FFEEAA" : "#0057FF", flexShrink: 0 }}>
               <CheckIcon />
@@ -317,6 +294,11 @@ function PricingCard({ plan, price, period, features, cta, highlighted, badge })
     </div>
   );
 }
+type FormDataType = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 // ── Main Component ──────────────────────────────────────────────────────────
 export default function LandingPage() {
@@ -324,7 +306,10 @@ export default function LandingPage() {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [billingYearly, setBillingYearly] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState<FormDataType>({ name: "",
+  email: "",
+  message: "",});
+
   const [formSent, setFormSent] = useState(false);
 
   const [sendMessage,{isLoading}] = useSendMessageMutation();
@@ -338,17 +323,19 @@ export default function LandingPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
+  const scrollTo = (id:string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileOpen(false);
     setActiveSection(id);
   };
 
-  const navLinks = [
+  const navLinks:{label:string;id:string}[] = [
     { label: "Home", id: "home" },
     { label: "Features", id: "features" },
     { label: "Pricing", id: "pricing" },
   ];
+
+
 
 
 
@@ -383,7 +370,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       color: "#191919",
       margin: 0,
       padding: 0,
-      overflowX: "hidden",
+      overflowX: "hidden" as const,
     }
   };
 
@@ -449,7 +436,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
           {/* Desktop nav */}
           <div style={{ display: "flex", alignItems: "center", gap: "32px" }} className="desktop-nav">
-            {navLinks.map(link => (
+            {navLinks.map((link:{label:string;id:string}) => (
               <button key={link.id} className="nav-link" onClick={() => scrollTo(link.id)}
                 style={{ background: "none", border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 600, color: activeSection === link.id ? "#0057FF" : "#191919", transition: "color 0.2s" }}>
                 {link.label}
@@ -686,45 +673,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ──────────────────────────────────────────────────── */}
-      {/* <section style={{ padding: "100px 40px", background: "#fff" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "56px" }}>
-            <span className="tag-badge" style={{ marginBottom: "16px", display: "inline-flex" }}>✦ What Users Say</span>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, color: "#191919", letterSpacing: "-1px", marginTop: "16px" }}>
-              Real people, <span style={{ color: "#0057FF" }}>real results</span>
-            </h2>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "24px" }}>
-            {[
-              { name: "Sarah M.", role: "Freelance Designer", quote: "The AI receipt scanner is witchcraft. I scan my grocery receipt and everything auto-categorizes. Saved me an hour a week.", stars: 5 },
-              { name: "James K.", role: "Software Engineer", quote: "Finally a finance app that respects my data. The 2FA + session management gives me confidence I know where I'm logged in.", stars: 5 },
-              { name: "Priya T.", role: "Small Business Owner", quote: "The monthly AI report sent to my email is incredible. It actually gives me actionable advice, not just numbers.", stars: 5 },
-            ].map(t => (
-              <div key={t.name} style={{
-                background: "#F9F9F9", border: "1px solid #E8E8E8", borderRadius: "16px", padding: "28px 24px",
-                transition: "all 0.3s ease"
-              }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0px 8px 24px rgba(0,87,255,0.08)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ display: "flex", gap: "2px", marginBottom: "16px" }}>
-                  {[...Array(t.stars)].map((_, i) => <span key={i} style={{ color: "#FFBB00" }}><StarIcon /></span>)}
-                </div>
-                <p style={{ fontSize: "15px", color: "#191919", lineHeight: 1.7, marginBottom: "20px", fontStyle: "italic" }}>"{t.quote}"</p>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#0057FF", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "14px", fontWeight: 700 }}>
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#191919" }}>{t.name}</div>
-                    <div style={{ fontSize: "12px", color: "#959595" }}>{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      
 
       {/* ── CONTACT ───────────────────────────────────────────────────────── */}
       <section id="contact" style={{ padding: "100px 40px", background: "#F9F9F9" }}>
@@ -749,8 +698,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           ) : (
             <form onSubmit={handleSubmit} style={{ background: "#fff", border: "1px solid #E8E8E8", borderRadius: "20px", padding: "40px", boxShadow: "0px 4px 16px rgba(0,0,0,0.06)" }}>
               {[
-                { key: "name", label: "Your Name", type: "text", placeholder: "John Doe" },
-                { key: "email", label: "Email Address", type: "email", placeholder: "john@example.com" },
+                { key: "name" as keyof FormDataType, label: "Your Name", type: "text", placeholder: "John Doe" },
+                { key: "email" as keyof FormDataType, label: "Email Address", type: "email", placeholder: "john@example.com" },
               ].map(field => (
                 <div key={field.key} style={{ marginBottom: "20px" }}>
                   <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#191919", marginBottom: "8px" }}>{field.label}</label>
@@ -844,7 +793,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             ].map(col => (
               <div key={col.title}>
                 <div style={{ fontSize: "13px", fontWeight: 700, color: "#fff", marginBottom: "16px", letterSpacing: "0.5px" }}>{col.title}</div>
-                {col.links.map(link => (
+                {col.links.map((link:string) => (
                   <a key={link} href="#" style={{ display: "block", fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", marginBottom: "10px", transition: "color 0.2s" }}
                     onMouseEnter={e => { e.currentTarget.style.color = "#fff"; }}
                     onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; }}>

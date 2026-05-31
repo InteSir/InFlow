@@ -1,11 +1,9 @@
 import SignInForm from "./_component/signin-form";
 import Logo from "@/components/logo/logo";
-// import dashboardImg from "../../assets/images/dashboard_.png";
-// import dashboardImgDark from "../../assets/images/dashboard_dark.png";
-import { useTheme } from "@/context/theme-provider";
+
 
 const SignIn = () => {
-  const { theme } = useTheme();
+
   return (
     <div className="grid min-h-svh lg:grid-cols-1 ">
       <div className="flex flex-col gap-4 p-6 md:p-10 md:pt-6 ">

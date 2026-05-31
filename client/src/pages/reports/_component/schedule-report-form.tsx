@@ -84,7 +84,7 @@ const ScheduleReportForm = ({onCloseDrawer}: {onCloseDrawer: () => void}) => {
 
   
   // Initialize the form
-  const {register,handleSubmit,formState:{errors},watch,setValue} = useForm<FormValues>({
+  const {register,handleSubmit,watch,setValue} = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: user?.email || "",
@@ -202,12 +202,12 @@ const ScheduleReportForm = ({onCloseDrawer}: {onCloseDrawer: () => void}) => {
             <div className="grid grid-cols-2 gap-3">
                  <div>
                    <label className={labelCls}>From</label>
-                   <input type="date" {...register("customFromDate")} className={inputCls} onClick={(e) => e.target.showPicker()} />
+                   <input type="date" {...register("customFromDate")} className={inputCls} onClick={(e) =>(e.target as HTMLInputElement).showPicker()} />
                 </div>
 
                 <div>
                    <label className={labelCls}>To</label>
-                   <input type="date" {...register("customToDate")} className={inputCls}  max={new Date().toISOString().split("T")[0]} onClick={(e) => e.target.showPicker()} />   
+                   <input type="date" {...register("customToDate")} className={inputCls}  max={new Date().toISOString().split("T")[0]} onClick={(e) => (e.target as HTMLInputElement).showPicker()} />   
                 </div>
             </div>
           )}

@@ -367,13 +367,12 @@ const TransactionForm = (props: {
                     <PopoverContent className="w-auto p-0 !pointer-events-auto" 
                     align="start">
                       <CalendarComponent
-                        mode="single"
                         selected={field.value}
-                        onSelect={(date) => {
+                        onSelect={(date:Date | undefined) => {
                           console.log(date)
                           field.onChange(date); // This updates the form value
                         }}
-                        disabled={(date) => date < new Date("2023-01-01")}
+                        disabled={(date:Date) => date < new Date("2023-01-01")}
                         initialFocus
                       />
                     </PopoverContent>

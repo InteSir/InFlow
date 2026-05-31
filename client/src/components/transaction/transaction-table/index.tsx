@@ -150,26 +150,26 @@ export default function TransactionTable(props:{pageSize?:number,isShowPaginatio
     pageNumber:filter.pageNumber,
     pageSize:filter.pageSize,
   });
-  const [deleteTransaction,{isLoading:isDeleting}] = useDeleteTransactionMutation();
-  const[duplicateTransaction,{isLoading:isDuplicating}] = useDuplicateTransactionMutation();
+  const [deleteTransaction] = useDeleteTransactionMutation();
+  const[duplicateTransaction] = useDuplicateTransactionMutation();
 
-  const [bulkDeleteTransaction,{isLoading:isBulkDeleting}] = useBulkDeleteTransactionMutation(); 
+  const [bulkDeleteTransaction] = useBulkDeleteTransactionMutation(); 
 
   const transactions = data?.Transactions || [];
-  console.log(data?.pagination)
+  
 
   const pagination = {
-    totalItems:data?.pagination?.totalCounts || 0,
-    totalPages: data?.pagination?.totalPages || 0,
-    pageNumber: filter.pageNumber,
-    pageSize: filter.pageSize,
+    totalItems:data?.pagination?.totalCounts ?? 0,
+    totalPages: data?.pagination?.totalPages ?? 0,
+    pageNumber: filter.pageNumber ?? 1,
+    pageSize: filter.pageSize ?? 10,
   }
 
-  const allSelected = transactions.length > 0 &&  transactions.every((t: any) => selectedIds.includes(t.id));
+  const allSelected = transactions.length > 0 &&  transactions.every((t: any) => selectedIds.includes(t.id ?? ""));
 
   const toggleAll = () =>{
     if(allSelected) setSelectedIds([]);
-    else setSelectedIds(transactions.map((t: any) => t.id));
+    else setSelectedIds(transactions.map((t: any) => t.id ?? ""));
   }
   const toggleOne = (id: string) => {
     setSelectedIds((prev) =>
@@ -365,16 +365,19 @@ export default function TransactionTable(props:{pageSize?:number,isShowPaginatio
                 </td>
               </tr>
             ) : (
-              transactions.map((transaction)=>(
-                <tr key={transaction.id} className="hover:bg-gray-50/70 transition-colors group dark:hover:bg-gray-950 ">
+              transactions.map((transaction:any)=>{
+              
+                const currentId = transaction.id ?? "";
+                 return ( 
+                <tr key={currentId} className="hover:bg-gray-50/70 transition-colors group dark:hover:bg-gray-950 ">
 
                   {(props.isShowPagination ?? true) && (
                   <>
                       <td className="p-3">
                         <input
                           type="checkbox"
-                          checked={selectedIds.includes(transaction.id)}
-                          onChange={() => toggleOne(transaction.id)}
+                          checked={selectedIds.includes(currentId)}
+                          onChange={() => toggleOne(currentId)}
                           className="rounded border-gray-300 text-gray-700 focus:ring-gray-400 cursor-pointer"
                         />
                       </td>
@@ -439,9 +442,9 @@ export default function TransactionTable(props:{pageSize?:number,isShowPaginatio
                    {/* Row menu */}
                   <td className="px-4 py-3 text-right  dark:text-white">
                      <RowMenu 
-                        transactionId={transaction.id}
-                          onDuplicate={() => handleDuplicate(transaction.id)}
-                          onDelete={() => handleDeleteOne(transaction.id)}
+                        transactionId={currentId}
+                          onDuplicate={() => handleDuplicate(currentId)}
+                          onDelete={() => handleDeleteOne(currentId)}
                      />
                   </td>
                   </>)}
@@ -452,7 +455,7 @@ export default function TransactionTable(props:{pageSize?:number,isShowPaginatio
 
 
                 </tr>
-              ))
+              )})
             )}
           </tbody>
         </table>
