@@ -1,6 +1,6 @@
-# 💰 InFlow - AI-Powered Expense Tracker & Financial Management Platform
+#💰 InFlow - AI-Powered Expense Tracker & Financial Management Platform
 
-## 🚀 Overview
+##🚀Overview
 
 **InFlow** is a modern full-stack expense tracking and personal finance management platform designed to help users monitor their income, expenses, subscriptions, recurring payments, and overall financial health.
 
