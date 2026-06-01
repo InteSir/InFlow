@@ -13,7 +13,7 @@ const DashboardStats = ({ dateRange }: { dateRange?: DateRangeType }) => {
   
 
   const summaryData = data?.data;
-  console.log("Summary",summaryData);
+
   
 
 

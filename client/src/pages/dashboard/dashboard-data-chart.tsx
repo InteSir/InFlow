@@ -58,7 +58,6 @@ const DashboardDataChart: React.FC<PropsType> = (props) => {
     preset: dateRange?.value,
   });
   const chartData = data?.data?.chartData || [];
-  console.log("DataChart",data)
   const totalExpenseCount = data?.data?.totalexpenseCount || 0;
   const totalIncomeCount = data?.data?.totalIncomeCount || 0;
 

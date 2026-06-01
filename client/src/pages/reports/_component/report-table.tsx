@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { useGetAllReportsQuery } from '@/features/report/reportAPI'
-import { Clock, Loader } from 'lucide-react'
+import { Clock} from 'lucide-react'
 
 export type ReportStatus =
   | "SENT"
@@ -52,9 +52,15 @@ const ReportTable = () => {
             </tr>
           </thead>
           <tbody>
-            {isFetching &&
-              [...Array(6)].map((_, i) => <Loader key={i} />)}
- 
+            {isFetching && (
+                [...Array(6)].map((_, i) => (
+                  <tr key={i} className="border-b border-gray-100 dark:border-zinc-800">
+                    <td colSpan={6} className="py-4 text-center">
+                      <div className="h-4 bg-gray-100 dark:bg-zinc-800 rounded animate-pulse w-full max-w-[90%] mx-auto" />
+                    </td>
+                  </tr>
+                ))
+            )}
             {/* Empty state */}
             {!isFetching && reports.length === 0 && (
               <tr>

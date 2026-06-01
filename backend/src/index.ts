@@ -29,6 +29,7 @@ import * as path from 'path';
 import { GoogleGenAI } from '@google/genai';
 import * as fs from 'fs';
 import ContactRouter from './routes/contact.route';
+import CronRouter from './routes/cron.route';
 
 const app = express();
 app.set("trust proxy", 1);
@@ -59,6 +60,7 @@ app.get(
     });
   }),
 );
+app.use(`${BASE_PATH}/cron`,CronRouter);
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/user`, passportAuthenticateJwt, userRoutes);
 app.use(`${BASE_PATH}/transaction`, passportAuthenticateJwt, TransactionRoutes);

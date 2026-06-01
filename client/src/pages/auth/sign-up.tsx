@@ -15,7 +15,7 @@ const SignUp = () => {
   dark:backdrop-blur-xl 
   dark:border dark:border-white/10 
   dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] 
-  rounded-xl">
+  rounded-xl bg-[var(--card)] shadow-[0_4px_20px_-2px_rgba(20,20,20,0.04),0_2px_6px_-1px_rgba(20,20,20,0.02)]">
             <SignUpForm />
           
           </div>

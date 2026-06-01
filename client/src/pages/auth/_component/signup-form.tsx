@@ -88,11 +88,11 @@ const SignUpForm = () => {
         </div>
         <p className="text-xs dark:text-slate- font-normal">
           By signing in, you agree to our{" "}
-          <a className="text-primary hover:underline" href="#">
+          <a className="text-blue-600 hover:underline" href="#">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a className="text-primary hover:underline" href="#">
+          <a className="text-blue-600 hover:underline" href="#">
             Privacy Policy
           </a>
           .

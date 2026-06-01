@@ -10,6 +10,8 @@ const envConfig = () => ({
     JWT_EXPIRES_IN:getEnv("JWT_EXPIRES_IN","15m") as string,
     JWT_REFRESH_SECRET:getEnv("JWT_REFRESH_SECRET","jwt54354"),
     JWT_REFRESH_EXPIRES_IN:getEnv("JWT_REFRESH_EXPIRES_IN","7d") as string,
+
+    CRON_SECRET:getEnv("CRON_SECRET"),
     
     CLOUDINARY_CLOUD_NAME:getEnv("CLOUDINARY_CLOUD_NAME"),
     CLOUDINARY_API_KEY:getEnv("CLOUDINARY_API_KEY"),

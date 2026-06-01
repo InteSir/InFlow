@@ -14,14 +14,14 @@ const GoogleLoginComponent = GoogleLogin as any;
 export const GoogleAuthButton = ({ mode }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [googleAuth] = useGoogleAuthMutation();
+  const [googleAuth,{isLoading}] = useGoogleAuthMutation();
 
   const handleSuccess = async (credentialResponse: any) => {
     try {
       const idToken = credentialResponse.credential; // 🔥 THIS IS THE ID TOKEN
 
       const result = await googleAuth({ idToken }).unwrap();
-      console.log("Google login:", result);
+
 
        if(result.user.userPreference.enable2FA){
               dispatch(setCredentials({...result,mfaPending:true}));
@@ -44,12 +44,21 @@ export const GoogleAuthButton = ({ mode }: Props) => {
   };
 
   return (
+    <div className="w-full min-h-[40px] flex justify-center items-center my-2">
+      {isLoading ? (
+        <div className="text-sm text-gray-500 animate-pulse">Authenticating account...</div>
+      ) : (
     <GoogleLoginComponent
       onSuccess={handleSuccess}
       onError={() => toast.error("Google login failed")}
       text={mode === "signup" ? "signup_with" : "continue_with"}
+      theme="filled_blue" // Optional: makes the branding stand out cleanly
+          shape="rectangular"
+          width="320"
       
     />
+      )}
+    </div>
   );
 };
 

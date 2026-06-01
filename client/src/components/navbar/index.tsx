@@ -5,7 +5,7 @@ import { PROTECTED_ROUTES } from "@/routes/common/routePath";
 import { cn } from "@/lib/utils";
 import Logo from "../logo/logo";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent } from "../ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from "../ui/sheet";
 import { UserNav } from "./user-nav";
 import LogoutDialog from "./logout-dialog";
 import { useTypedSelector } from "@/app/hook";
@@ -67,12 +67,13 @@ const Navbar = () => {
                 <Button
                   size="sm"
                   variant="ghost"
+                  key={route.href}
                   className={cn(
                     `w-full lg:w-auto font-normal py-4.5
                      hover:text-white border-none
                      text-white/50 focus:bg-white/30
                      transtion !bg-transparent!text-[13px] lg:text-[14.5px]
-                     flex-shrink-1 
+                     flex-shrink-1 hover:bg-[var(--secondary-dark-color)] dark:hover:bg-[#141414]
                      `,
                     pathname === route.href && "text-white"
                   )}
@@ -88,11 +89,16 @@ const Navbar = () => {
             {/* Mobile Navigation */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetContent side="left" className="bg-white dark:bg-card ">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <SheetDescription className="sr-only">
+                  Access your account dashboard pages and settings.
+                </SheetDescription>
                 <nav className="flex flex-col gap-y-2 pt-9">
                   {routes?.map((route) => (
                     <Button
                       size="sm"
                       variant="ghost"
+                      key={route.href}
                       className={cn(
                         `w-full font-normal py-4.5
                        hover:bg-white/10 hover:text-black border-none
