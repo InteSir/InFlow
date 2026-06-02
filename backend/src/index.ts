@@ -60,6 +60,8 @@ app.get(
     });
   }),
 );
+app.get(`${BASE_PATH}/health`,(req,res)=>res.json({status:'ok'}));
+
 app.use(`${BASE_PATH}/cron`,CronRouter);
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/user`, passportAuthenticateJwt, userRoutes);

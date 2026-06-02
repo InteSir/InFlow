@@ -11,3 +11,5 @@ build/
 *.log
 .vscode/
 .DS_Store
+.vercel
+.env*
