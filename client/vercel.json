@@ -1,14 +1,5 @@
 {
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "edge"
-    }
-  },
   "rewrites": [
-    {
-      "source": "/api/cron-trigger",
-      "destination": "/api/cron-trigger"
-    },
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"

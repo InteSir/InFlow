@@ -6,6 +6,7 @@ export default async function handler(request: Request) {
   // 1. Security Check: Ensure the call is coming from Vercel's cron runner
   const authHeader = request.headers.get('authorization');
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    console.error('[CRON] Unauthorized - header was:', authHeader);
     return new Response(
       JSON.stringify({ success: false, error: 'Unauthorized' }), 
       { status: 401, headers: { 'Content-Type': 'application/json' } }
@@ -14,7 +15,7 @@ export default async function handler(request: Request) {
 
   try {
     // 2. Fire the post request to wake up and trigger your Render backend
-    const backendUrl = "[https://inflow-b15c.onrender.com/api/cron/trigger](https://inflow-b15c.onrender.com/api/cron/trigger)"; 
+    const backendUrl = "https://inflow-b15c.onrender.com/api/cron/trigger"; 
     
     console.log(`Pinging backend: ${backendUrl}`);
     const res = await fetch(backendUrl, {
@@ -26,12 +27,14 @@ export default async function handler(request: Request) {
     });
 
     const data = await res.json();
+    console.log('[CRON] Backend responded:', res.status, data);
     
     return new Response(
       JSON.stringify({ success: true, backendStatus: res.status, data }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
+    console.error('[CRON] Failed:', error.message);
     return new Response(
       JSON.stringify({ success: false, error: error.message || "Failed to trigger backend" }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
