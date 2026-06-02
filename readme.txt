@@ -2,7 +2,7 @@
 
 ##🚀Overview
 
-**InFlow** is a modern full-stack expense tracking and personal finance management platform designed to help users monitor their income, expenses, subscriptions, recurring payments, and overall financial health.
+InFlow is a modern full-stack expense tracking and personal finance management platform designed to help users monitor their income, expenses, subscriptions, recurring payments, and overall financial health.
 
 Built with the **MERN Stack (MongoDB, Express.js, React, Node.js)** and **TypeScript**, InFlow combines powerful analytics, AI-driven automation, enterprise-grade authentication, and subscription management into one seamless experience.
 
